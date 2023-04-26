@@ -7,6 +7,7 @@ import com.example.lists.exceptions.EmployeeStorageIsFullException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -26,14 +27,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (employeeList.size() != size) {
-            employeeList.add(new Employee(firstName, lastName));
-            return employeeList.get(employeeList.size() - 1);
-        }
         for (Employee employee : employeeList) {
             if (employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName)) {
                 throw new EmployeeAlreadyAddedException("Такой сотрудник уже существует");
             }
+        }
+        if (employeeList.size() != size) {
+            employeeList.add(new Employee(firstName, lastName));
+            return employeeList.get(employeeList.size() - 1);
         }
         throw new EmployeeStorageIsFullException("Хранилище переполнено");
     }
@@ -57,5 +58,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         throw new EmployeeNotFoundException("Такого сотрудника нет");
+    }
+
+    @Override
+    public List<Employee> printEmployees() {
+        return Collections.unmodifiableList(employeeList);
     }
 }
