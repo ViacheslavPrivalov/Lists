@@ -58,4 +58,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         throw new EmployeeNotFoundException("Такого сотрудника нет");
     }
+
+    public List<Employee> printEmployees() {
+        return employeeList;
+    }
 }
