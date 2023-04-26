@@ -26,14 +26,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
-        if (employeeList.size() != size) {
-            employeeList.add(new Employee(firstName, lastName));
-            return employeeList.get(employeeList.size() - 1);
-        }
         for (Employee employee : employeeList) {
             if (employee.getFirstName().equals(firstName) && employee.getLastName().equals(lastName)) {
                 throw new EmployeeAlreadyAddedException("Такой сотрудник уже существует");
             }
+        }
+        if (employeeList.size() != size) {
+            employeeList.add(new Employee(firstName, lastName));
+            return employeeList.get(employeeList.size() - 1);
         }
         throw new EmployeeStorageIsFullException("Хранилище переполнено");
     }
