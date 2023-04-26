@@ -7,6 +7,7 @@ import com.example.lists.exceptions.EmployeeStorageIsFullException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -59,7 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         throw new EmployeeNotFoundException("Такого сотрудника нет");
     }
 
+    @Override
     public List<Employee> printEmployees() {
-        return employeeList;
+        return Collections.unmodifiableList(employeeList);
     }
 }
